@@ -10,7 +10,12 @@ const input = form.elements['search-text'];
 
 form.addEventListener('submit', handleUserQuery)
 
-function handleUserQuery (event) {
+
+
+// після рефакторингу
+
+
+async function handleUserQuery (event) {
     event.preventDefault(); 
 
     const searchQuery = input.value.trim();
@@ -26,25 +31,24 @@ function handleUserQuery (event) {
     showLoader();
     console.log('showLoader called');
     clearGallery();
+    try {
+        const data = await getImagesByQuery(searchQuery);
     
-    getImagesByQuery(searchQuery)
-    .then(data => {
-            if (data.hits.length === 0) {
+        if (data.hits.length === 0) {
             iziToast.info({
             message: 'Sorry, there are no images matching your search query. Please try again!',
             position: 'topRight',
             });
             return;
         }
+    
         createGallery(data.hits);
-        })
-    .catch(error => {
+    } catch (error) {
         iziToast.error({
-            message: 'Something went wrong. Please try again later.',
-            position: 'topRight',
-            });
-        })
-    .finally(() => {
-        hideLoader();
+        message: 'Something went wrong. Please try again later.',
+        position: 'topRight',
         });
+    } finally {
+        hideLoader();
+    }
 }
