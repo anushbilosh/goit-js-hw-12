@@ -62,12 +62,12 @@ export function showLoadMoreButton() {
 export function scrollGallerySmoothly() {
     const firstCard = document.querySelector('.gallery-item');
     if (!firstCard) return;
-  
+
     const cardHeight = firstCard.getBoundingClientRect().height;
-  
+
     window.scrollBy({
-      top: cardHeight * 2,
-      behavior: 'smooth',
+        top: cardHeight * 2,
+        behavior: 'smooth',
     });
-  }
+}
 
