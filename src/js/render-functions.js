@@ -4,6 +4,8 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const galleryContainer = document.querySelector('.gallery');
 const loaderElement = document.querySelector('.loader');
+export const loadBtnElem = document.querySelector('.load-btn');
+
 
 const lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
@@ -43,9 +45,29 @@ export function clearGallery() {
 
 export function showLoader() {
     loaderElement.classList.add('active');
-  }
+}
 
-  export function hideLoader() {
+export function hideLoader() {
     loaderElement.classList.remove('active');
+}
+
+export function hideLoadMoreButton() {
+    loadBtnElem.classList.add('hidden');
+}
+
+export function showLoadMoreButton() {
+    loadBtnElem.classList.remove('hidden');
+}
+
+export function scrollGallerySmoothly() {
+    const firstCard = document.querySelector('.gallery-item');
+    if (!firstCard) return;
+  
+    const cardHeight = firstCard.getBoundingClientRect().height;
+  
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
   }
 
